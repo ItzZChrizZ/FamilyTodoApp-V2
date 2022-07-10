@@ -27,6 +27,7 @@ class Todo {
         ),
         title: json["title"],
         id: json["id"],
+        selectedTime: json["selectedTime"],
       );
 
   Map<String, dynamic> toJson() => {
