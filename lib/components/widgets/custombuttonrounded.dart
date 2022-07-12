@@ -33,7 +33,8 @@ class CustomButtonRounded extends StatelessWidget {
         height: size.height * 0.08,
         width: size.width * 0.9,
         decoration: BoxDecoration(
-          color: _outlineBtn ? Colors.white : Colors.black,
+          color:
+              _outlineBtn ? Colors.white : const Color.fromRGBO(54, 69, 79, 1),
           border: Border.all(
             color: Colors.black,
             width: 2,
@@ -48,8 +49,10 @@ class CustomButtonRounded extends StatelessWidget {
                 child: Text(
                   text,
                   style: TextStyle(
-                    color: _outlineBtn ? Colors.black : Colors.white,
-                    fontSize: 15,
+                    color: _outlineBtn
+                        ? const Color.fromRGBO(54, 69, 79, 1)
+                        : Colors.white,
+                    fontSize: 18,
                   ),
                 ),
               ),

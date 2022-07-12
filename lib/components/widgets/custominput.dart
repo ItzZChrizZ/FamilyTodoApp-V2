@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 class CustomInput extends StatelessWidget {
+  final TextEditingController? controller;
   final onPressed;
   final Function(String)? onChanged;
   final Function(String)? onSubmitted;
@@ -19,7 +20,8 @@ class CustomInput extends StatelessWidget {
       this.onSubmitted,
       this.focusNode,
       this.textInputAction,
-      this.isPasswordField})
+      this.isPasswordField,
+      this.controller})
       : super(key: key);
 
   @override
@@ -42,6 +44,8 @@ class CustomInput extends StatelessWidget {
           ),
         ),
         child: TextField(
+          maxLines: 3,
+          controller: controller,
           obscureText: _isPasswordField,
           textInputAction: textInputAction,
           focusNode: focusNode,
