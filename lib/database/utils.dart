@@ -9,7 +9,7 @@ class TodosProvider extends ChangeNotifier {
   List<Todo> get todosCompleted =>
       todos.where((todo) => todo.isDone == true).toList();
 
-    void addTodo(Todo todo) {
+  void addTodo(Todo todo) {
     todos.add(todo);
     notifyListeners();
   }
@@ -18,7 +18,8 @@ class TodosProvider extends ChangeNotifier {
     todos.remove(todo);
     notifyListeners();
   }
-   void updateTodo(
+
+  void updateTodo(
     Todo todo,
     String title,
     String description,
@@ -28,6 +29,20 @@ class TodosProvider extends ChangeNotifier {
     todo.description = description;
     todo.selectedTime = selectedTime;
 
+    notifyListeners();
+  }
+
+  void updateUser(
+    UserInfo userinfo,
+    String username,
+    String password,
+    String email,
+    int number,
+  ) {
+    userinfo.userName = username;
+    userinfo.passWord = password;
+    userinfo.email = email;
+    userinfo.number = number;
     notifyListeners();
   }
 }

@@ -19,3 +19,19 @@ class Todo {
     this.selectedTime,
   });
 }
+
+class UserInfo {
+  String userName;
+  String passWord;
+  String email;
+  int number;
+  int userId;
+
+  UserInfo({
+    required this.userName,
+    required this.passWord,
+    required this.email,
+    required this.number,
+    required this.userId,
+  });
+}
