@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:familytodolistv2/constants.dart';
 import 'package:familytodolistv2/services/firebase.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class TodoListPage extends StatefulWidget {
   const TodoListPage({Key? key}) : super(key: key);
@@ -44,18 +45,27 @@ class _TodoListPageState extends State<TodoListPage> {
               return ListView.builder(
                 itemCount: docs?.length,
                 itemBuilder: (context, index) {
-                  return ClipRRect(
-                    borderRadius: BorderRadius.circular(16.0),
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: const BoxDecoration(
-                        color: Colors.amber,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  return Container(
+                    margin: const EdgeInsets.all(
+                      10.0,
+                    ),
+                    padding: const EdgeInsets.all(20.0),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Checkbox(
+                          value: false,
+                          onChanged: (_) {},
+                        ),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 docs![index]["title"],
@@ -63,16 +73,16 @@ class _TodoListPageState extends State<TodoListPage> {
                               ),
                               Text(
                                 docs[index]["Description"],
-                                style: Constants.subTitle,
+                                style: Constants.title,
                               ),
                             ],
                           ),
-                          Text(
-                            docs[index]["Picked DateTime"],
-                            style: Constants.regulerText,
-                          ),
-                        ],
-                      ),
+                        ),
+                        Text(
+                          docs[index]["Picked DateTime"],
+                          style: Constants.title,
+                        ),
+                      ],
                     ),
                   );
                 },

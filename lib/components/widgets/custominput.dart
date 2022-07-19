@@ -44,7 +44,6 @@ class CustomInput extends StatelessWidget {
           ),
         ),
         child: TextField(
-          maxLines: 3,
           controller: controller,
           obscureText: _isPasswordField,
           textInputAction: textInputAction,

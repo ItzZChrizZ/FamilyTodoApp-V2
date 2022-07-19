@@ -1,20 +1,33 @@
-// ignore_for_file: deprecated_member_use, unnecessary_null_comparison
-
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:familytodolistv2/models/todo.dart';
 import 'package:flutter/material.dart';
 
-class Utils {
-  static showSnackbar(BuildContext context, String text) =>
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text(text)));
+class TodosProvider extends ChangeNotifier {
+  List<Todo> todos = [];
 
-  static DateTime toDateTime(Timestamp value) {
-    if (value == null) return DateTime.now();
+  List<Todo> get todoss => todos.where((todo) => todo.isDone == false).toList();
 
-    return value.toDate();
+  List<Todo> get todosCompleted =>
+      todos.where((todo) => todo.isDone == true).toList();
+
+    void addTodo(Todo todo) {
+    todos.add(todo);
+    notifyListeners();
   }
 
-  static dynamic fromDateTimeToJson(DateTime date) {
-    if (date == null) return null;
-    return date.toUtc();
+  void deleteTodo(Todo todo) {
+    todos.remove(todo);
+    notifyListeners();
+  }
+   void updateTodo(
+    Todo todo,
+    String title,
+    String description,
+    DateTime selectedTime,
+  ) {
+    todo.title = title;
+    todo.description = description;
+    todo.selectedTime = selectedTime;
+
+    notifyListeners();
   }
 }

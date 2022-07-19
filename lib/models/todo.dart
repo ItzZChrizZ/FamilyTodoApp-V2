@@ -1,5 +1,3 @@
-import 'package:familytodolistv2/database/utils.dart';
-
 class TodoField {
   static const createdTime = "Created Time";
 }
@@ -20,22 +18,4 @@ class Todo {
     this.isDone = false,
     this.selectedTime,
   });
-
-  static Todo fromJson(Map<String, dynamic> json) => Todo(
-        createdTime: Utils.toDateTime(
-          json["createdTime"],
-        ),
-        title: json["title"],
-        id: json["id"],
-        selectedTime: json["selectedTime"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "Created Time": Utils.fromDateTimeToJson(createdTime),
-        "title": title,
-        "description": description,
-        "id": id,
-        "isDone": isDone,
-        "selectedTime": selectedTime,
-      };
 }
