@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:familytodolistv2/constants.dart';
 import 'package:familytodolistv2/services/firebase.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 
 class TodoListPage extends StatefulWidget {
   const TodoListPage({Key? key}) : super(key: key);
@@ -15,7 +14,6 @@ class TodoListPage extends StatefulWidget {
 
 class _TodoListPageState extends State<TodoListPage> {
   String? uid = "";
-  var logger = Logger();
   final FirebaseServices _firebaseServices = FirebaseServices();
 
   @override
