@@ -1,9 +1,12 @@
 import 'package:familytodolistv2/components/homepage/competedtodolistpage.dart';
 import 'package:familytodolistv2/components/homepage/todolistpage.dart';
 import 'package:familytodolistv2/constants.dart';
+import 'package:familytodolistv2/database/provider.dart';
 import 'package:familytodolistv2/main.dart';
 import 'package:familytodolistv2/pages/createtodopage.dart';
+import 'package:familytodolistv2/services/firebase.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,9 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
- 
   int selectedIndex = 0;
-
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,15 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: tabs[selectedIndex],
+      body: StreamBuilder(
+        stream: FirebaseServices.readTodos(),
+        builder: (context, snapshot) {
+          final todos = snapshot.data;
+          final provider = Provider.of<TodosProvider>(context);
+          provider.setTodos(todos);
+          return tabs[selectedIndex];
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),

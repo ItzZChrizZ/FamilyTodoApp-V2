@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CreateTodoPage extends StatefulWidget {
-  const CreateTodoPage({Key? key}) : super(key: key);
+  const CreateTodoPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<CreateTodoPage> createState() => _CreateTodoPageState();

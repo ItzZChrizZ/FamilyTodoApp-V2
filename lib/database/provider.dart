@@ -3,17 +3,24 @@ import 'package:familytodolistv2/services/firebase.dart';
 import 'package:flutter/material.dart';
 
 class TodosProvider extends ChangeNotifier {
-  List<Todo> todos = [];
+  List<Todo> _todos = [];
 
-  List<Todo> get todoss => todos.where((todo) => todo.isDone == false).toList();
+  List<Todo> get todoss =>
+      _todos.where((todo) => todo.isDone == false).toList();
 
   List<Todo> get todosCompleted =>
-      todos.where((todo) => todo.isDone == true).toList();
+      _todos.where((todo) => todo.isDone == true).toList();
+
+  void setTodos(List<Todo> todos) =>
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        _todos = todos;
+        notifyListeners();
+      });
 
   void addTodo(Todo todo) => FirebaseServices.createTodo(todo);
 
   void deleteTodo(Todo todo) {
-    todos.remove(todo);
+    _todos.remove(todo);
     notifyListeners();
   }
 
