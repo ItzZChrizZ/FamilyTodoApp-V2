@@ -40,6 +40,7 @@ class TodosProvider extends ChangeNotifier {
     todo.description = description;
     todo.selectedTime = selectedTime;
 
+    FirebaseServices.updateTodo(todo);
     notifyListeners();
   }
 }

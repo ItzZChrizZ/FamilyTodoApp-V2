@@ -30,9 +30,8 @@ class _TodoListPageState extends State<TodoListPage> {
         height: MediaQuery.of(context).size.height,
         child: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
-              .collection("Tasks")
+              .collection("Todos")
               .doc(uid)
-              .collection("Mytasks")
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {

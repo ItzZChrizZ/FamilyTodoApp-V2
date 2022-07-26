@@ -3,6 +3,7 @@ import 'package:familytodolistv2/components/homepage/todolistpage.dart';
 import 'package:familytodolistv2/constants.dart';
 import 'package:familytodolistv2/database/provider.dart';
 import 'package:familytodolistv2/main.dart';
+import 'package:familytodolistv2/models/todo.dart';
 import 'package:familytodolistv2/pages/createtodopage.dart';
 import 'package:familytodolistv2/services/firebase.dart';
 import 'package:flutter/material.dart';
@@ -56,15 +57,29 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: StreamBuilder(
-        stream: FirebaseServices.readTodos(),
-        builder: (context, snapshot) {
-          final todos = snapshot.data;
-          final provider = Provider.of<TodosProvider>(context);
-          provider.setTodos(todos);
-          return tabs[selectedIndex];
-        },
-      ),
+      body: StreamBuilder<List<Todo>>(
+          stream: FirebaseServices.readTodos(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              default:
+                if (snapshot.hasData) {
+                  final todos = snapshot.data;
+                  final provider = Provider.of<TodosProvider>(context);
+                  provider.setTodos(todos!);
+                  return tabs[selectedIndex];
+                } else {
+                  return Center(
+                      child: Text(
+                    "Something Went Wrong Try Again",
+                    style: Constants.title,
+                  ));
+                }
+            }
+          }),
       floatingActionButton: FloatingActionButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),

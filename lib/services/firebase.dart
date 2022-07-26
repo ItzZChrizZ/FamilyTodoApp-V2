@@ -28,9 +28,8 @@ class FirebaseServices {
       .snapshots()
       .transform(Utils.transformer(Todo.fromJson));
 
-
-
-
-
-
+  static Future updateTodo(Todo todo) async {
+    final docTodo = FirebaseFirestore.instance.collection("Todos").doc(todo.id);
+    await docTodo.update(todo.toJson());
+  }
 }
