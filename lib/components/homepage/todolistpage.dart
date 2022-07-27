@@ -1,95 +1,36 @@
-// ignore_for_file: avoid_unnecessary_containers, sized_box_for_whitespace
-
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:familytodolistv2/components/todowidget.dart';
 import 'package:familytodolistv2/constants.dart';
-import 'package:familytodolistv2/services/firebase.dart';
+import 'package:familytodolistv2/database/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class TodoListPage extends StatefulWidget {
+class TodoListPage extends StatelessWidget {
   const TodoListPage({Key? key}) : super(key: key);
 
   @override
-  State<TodoListPage> createState() => _TodoListPageState();
-}
-
-class _TodoListPageState extends State<TodoListPage> {
-  String? uid = "";
-  final FirebaseServices _firebaseServices = FirebaseServices();
-
-  @override
-  void initState() {
-    uid = _firebaseServices.getUserId();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection("Todos")
-              .doc(uid)
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
+    final provider = Provider.of<TodosProvider>(context);
+    final todos = provider.todos;
+    return todos.isEmpty
+        ? Center(
+            child: Text(
+              "No Todos",
+              style: Constants.subTitle,
+            ),
+          )
+        : ListView.separated(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.all(16.0),
+            separatorBuilder: (context, index) => Container(
+              height: 8.0,
+            ),
+            itemCount: todos.length,
+            itemBuilder: (context, index) {
+              final todo = todos[index];
+              return TodoWidget(
+                todo: todo,
               );
-            } else {
-              final docs = snapshot.data?.docs;
-
-              return ListView.builder(
-                itemCount: docs?.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.all(
-                      10.0,
-                    ),
-                    padding: const EdgeInsets.all(20.0),
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Checkbox(
-                          value: false,
-                          onChanged: (_) {},
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                docs![index]["title"],
-                                style: Constants.title,
-                              ),
-                              Text(
-                                docs[index]["Description"],
-                                style: Constants.title,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Text(
-                          docs[index]["Picked DateTime"],
-                          style: Constants.title,
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            }
-          },
-        ),
-      ),
-    );
+            },
+          );
   }
 }
