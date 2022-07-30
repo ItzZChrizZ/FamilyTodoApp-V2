@@ -23,7 +23,7 @@ class FirebaseServices {
   }
 
   static Stream<List<Todo>> readTodos() => FirebaseFirestore.instance
-      .collection('todo')
+      .collection('Todos')
       .orderBy(TodoField.createdTime, descending: true)
       .snapshots()
       .transform(Utils.transformer(Todo.fromJson));

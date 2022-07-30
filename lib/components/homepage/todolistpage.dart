@@ -10,8 +10,8 @@ class TodoListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<TodosProvider>(context);
-    final todos = provider.todos;
-    return todos.isEmpty
+    final todoList = provider.todosNotCompeted;
+    return todoList.isEmpty
         ? Center(
             child: Text(
               "No Todos",
@@ -24,9 +24,9 @@ class TodoListPage extends StatelessWidget {
             separatorBuilder: (context, index) => Container(
               height: 8.0,
             ),
-            itemCount: todos.length,
+            itemCount: todoList.length,
             itemBuilder: (context, index) {
-              final todo = todos[index];
+              final todo = todoList[index];
               return TodoWidget(
                 todo: todo,
               );

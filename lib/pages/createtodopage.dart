@@ -87,8 +87,8 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
     } else {
       final todo = Todo(
         id: DateTime.now().toString(),
-        title: "$titleController",
-        description: "$descriptionController",
+        title: titleController.toString(),
+        description: descriptionController.toString(),
         createdTime: DateTime.now(),
         selectedTime: date,
       );
